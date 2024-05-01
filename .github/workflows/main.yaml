@@ -12,16 +12,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEV_SERVER }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan devgit.devopsjourney.in.net >> ~/.ssh/known_hosts
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
 
       - name: Deploy to Development Server
         run: |
-          ssh -o StrictHostKeyChecking=no root@devgit.devopsjourney.in.net 'cd /var/www/html/ && git pull origin dev'
+          sshpass -p ${{ secrets.ROOT_PASS }} ssh -o StrictHostKeyChecking=no root@devgit.devopsjourney.in.net 'cd /var/www/html/ && git pull origin dev'
 
       - name: Health Check
         run: curl http://dev.devopsjourney.in.net/health

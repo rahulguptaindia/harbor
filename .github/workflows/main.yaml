@@ -1,3 +1,5 @@
+name: Deploy to Development Server on Push
+
 on:
   push:
     branches:
@@ -7,17 +9,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    - name: Set up SSH Key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.dev_server }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan devgit.devopsjourney.in.net  >> ~/.ssh/known_hosts
-    - name: Deploy to Development Server
-      run: ssh -o StrictHostKeyChecking=no root@devgit.devopsjourney.in.net 'cd /var/www/html/ && git pull origin dev'
+      - name: Set up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.dev_server }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan devgit.devopsjourney.in.net >> ~/.ssh/known_hosts
+        env:
+          dev_server: ${{ secrets.dev_server }}
 
-    - name: Health Check
-      run: curl http://dev.devopsjourney.in.net/health
+      - name: Deploy to Development Server
+        run: |
+          ssh -o StrictHostKeyChecking=no root@devgit.devopsjourney.in.net 'cd /var/www/html/ && git pull origin dev'
+
+      - name: Health Check
+        run: curl http://dev.devopsjourney.in.net/health

@@ -1,0 +1,23 @@
+name: Deploy to Development Server on Push
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy to Development Server
+        run: |
+          sshpass -p ${{ secrets.ROOT_PASS }} ssh -o StrictHostKeyChecking=no root@devgit.devopsjourney.in.net 'cd /var/www/html/ && git pull origin dev'
+
+      - name: Health Check
+        run: curl http://dev.devopsjourney.in.net/health

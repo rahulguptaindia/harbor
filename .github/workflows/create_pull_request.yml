@@ -16,7 +16,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          destination_branch: "main" # Your production branch name
+          destination_branch: "master" # Your production branch name
           source_branch: "dev" # Your development branch name
           title: "Deploying changes to production"
           body: "A new pull request to merge changes from dev to prod"

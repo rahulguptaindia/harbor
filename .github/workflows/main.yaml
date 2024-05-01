@@ -15,7 +15,7 @@ jobs:
       - name: Set up SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.dev_server }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.DEV_SERVER }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan devgit.devopsjourney.in.net >> ~/.ssh/known_hosts
         env:

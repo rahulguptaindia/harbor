@@ -18,8 +18,6 @@ jobs:
           echo "${{ secrets.DEV_SERVER }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan devgit.devopsjourney.in.net >> ~/.ssh/known_hosts
-        env:
-          dev_server: ${{ secrets.dev_server }}
 
       - name: Deploy to Development Server
         run: |

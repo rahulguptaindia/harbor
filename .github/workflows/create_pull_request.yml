@@ -1,0 +1,22 @@
+name: Create Pull Request to Production
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: "prod" # Your production branch name
+          source_branch: "dev" # Your development branch name
+          title: "Deploying changes to production"
+          body: "A new pull request to merge changes from dev to prod"

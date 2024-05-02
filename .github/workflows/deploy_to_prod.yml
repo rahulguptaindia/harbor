@@ -23,6 +23,3 @@ jobs:
         env:
           PROD_SSH_PASSWORD: ${{ secrets.PROD_SSH_PASSWORD }}
         continue-on-error: true
-        
-      - name: Health Check
-        run: curl http://prod.devopsjourney.in.net/health

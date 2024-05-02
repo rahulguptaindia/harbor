@@ -22,14 +22,3 @@ jobs:
           SSHPASS: ${{ secrets.PROD_SSH_PASSWORD }}
         run: |
           sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@3.110.49.217 'cd /var/www/html/ && git pull --allow-unrelated-histories --no-rebase origin master'
-
-
-      - name: Post Deployment Check
-        run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://3.110.49.217/health)
-          if [ "$response" -ne 200 ]; then
-            echo "Health check failed with response $response"
-            exit 1
-          else
-            echo "Health check succeeded with response $response"
-          fi

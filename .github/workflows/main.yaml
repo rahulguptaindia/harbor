@@ -13,11 +13,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
 
       - name: Deploy to Development Server
+        env:
+          SSHPASS: ${{ secrets.ROOT_PASS }}
         run: |
-          sshpass -p ${{ secrets.ROOT_PASS }} ssh -o StrictHostKeyChecking=no root@13.232.58.45 'cd /var/www/html/ && git pull --allow-unrelated-histories origin dev'
+          sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@13.232.58.45 'cd /var/www/html/ && git pull --allow-unrelated-histories origin dev'
 
       - name: Health Check
         run: curl http://13.232.58.45/health

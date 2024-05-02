@@ -17,7 +17,7 @@ jobs:
 
       - name: Deploy to Development Server
         run: |
-          sshpass -p ${{ secrets.ROOT_PASS }} ssh -o StrictHostKeyChecking=no root@devgit.devopsjourney.in.net 'cd /var/www/html/ && git pull --allow-unrelated-histories origin dev'
+          sshpass -p ${{ secrets.ROOT_PASS }} ssh -o StrictHostKeyChecking=no root@13.232.58.45 'cd /var/www/html/ && git pull --allow-unrelated-histories origin dev'
 
       - name: Health Check
-        run: curl http://dev.devopsjourney.in.net/health
+        run: curl http://13.232.58.45/health

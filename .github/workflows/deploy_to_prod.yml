@@ -13,13 +13,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install sshpass
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
 
       - name: Deploy to Production
         run: |
-          sshpass -p ${{ secrets.PROD_SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@3.110.49.217 'cd /var/www/html/ && git pull origin master'
+          SSHPASS=${{ secrets.PROD_SSH_PASSWORD }} sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@3.110.49.217 'cd /var/www/html/ && git pull origin master'
         env:
           PROD_SSH_PASSWORD: ${{ secrets.PROD_SSH_PASSWORD }}
         continue-on-error: true

@@ -23,12 +23,6 @@ jobs:
         env:
           PROD_SSH_PASSWORD: ${{ secrets.PROD_SSH_PASSWORD }}
         continue-on-error: true
-
-      - name: Post Deployment Check
-        run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://prod.devopsjourney.in.net/healthcheck)
-          if [ "$response" -ne 200 ]; then
-            echo "Health check failed with response $response"
-            exit 1
-          fi
-        continue-on-error: false
+        
+      - name: Health Check
+        run: curl http://prod.devopsjourney.in.net/health

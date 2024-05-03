@@ -21,4 +21,4 @@ jobs:
         env:
           SSHPASS: ${{ secrets.PROD_SSH_PASSWORD }}
         run: |
-          sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@3.110.49.217 'cd /var/www/html/ && git pull --allow-unrelated-histories --no-rebase origin master'
+          sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@43.204.100.92 'cd /var/www/html/ && git pull --allow-unrelated-histories --no-rebase origin master'

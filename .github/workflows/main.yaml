@@ -19,7 +19,7 @@ jobs:
         env:
           SSHPASS: ${{ secrets.ROOT_PASS }}
         run: |
-          sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@13.232.58.45 'cd /var/www/html/ && git pull --allow-unrelated-histories origin dev'
+          sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@43.204.102.135 'cd /var/www/html/ && git pull --allow-unrelated-histories origin dev'
 
       - name: Health Check
-        run: curl http://13.232.58.45/health
+        run: curl http://43.204.102.135/health
